@@ -15,3 +15,11 @@ Components of the web application include the performance of:
 
 Screenshots:
 Please check the screenshots in the "Screenshots of web pages in the application" directory
+
+
+Code is in "src" directory:
+1. In the charts directory: urls.py, views.py are the core files.
+2. html pages are in "templates" directory
+3. ".elasticbeanstalk" directory contains the yml file needed to deploy this code in Amazon's elastic beanstalk (AWS)
+4. db.sqlite3 is the database
+5. requirements.txt contains all the libraries/packages of Python needed for this application to run.

@@ -1,0 +1,81 @@
+{% load staticfiles %}
+<html>
+    
+    <head>    
+        <title>Divya Rajuladevi - Line Charts for page load</title>
+        <!-- <meta http-equiv="refresh" content="14" > -->
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <style type="text/css">
+            #header {
+                text-align: center;
+            }
+            #wrapper {
+                margin:0 auto;
+                width:900px;
+            }
+            #submain {
+                margin:0 auto;
+                width:600px;
+            }
+            #sub-left {
+                float:left;
+                width:480px;
+            }
+            #sub-right {
+                float:right;
+                width:340px;
+                text-align: right;
+            }
+        </style>
+
+    </head>
+    <body onLoad="LoadMyJs();LoadHighChart();">
+        <a href="/">Back to Server Response time</a><br><br>
+        <a href="/dns">View DNS lookup performance</a> <br>
+        <div id="wrapper">
+            <div id="header"><h1>Intuit website page load performance dashboard</h1></div>
+            <div id="sub-main">
+                <div id="sub-left">
+                    <h3>Chart : Intuit page load time</h3>
+
+                    <canvas id="myChart" width="500" height="500"></canvas>
+
+                    <script type="text/javascript" src="./Chart.min.js"></script>
+                    <script type="text/javascript">
+                        function LoadMyJs() {
+                                $.get("/line", function (data) {
+                                var ctx = $("#myChart").get(0).getContext("2d");
+                                new Chart(ctx, {
+                                type: 'line',
+                                data: data,
+                                options: {
+                                    responsive: true
+                                }
+                            });
+                        });
+                        }
+
+                    </script>
+                </div>
+                
+                <div id="sub-right">
+                      <h3>HighCharts: Intuit page load time</h3>
+
+                        <div id="myHighChart" style="height: 500px; width: 500px;"></div>
+
+                        <script type="text/javascript" src="./highcharts.js"></script>
+                        <script type="text/javascript">
+                            function LoadHighChart() {
+                                $.get("/highline", function (data) {
+                                data["chart"] = {type: "spline"};
+                                $("#myHighChart").highcharts(data);
+                            });
+                        }
+                        </script>
+                </div>
+                <button onclick="LoadHighChart();LoadMyJs();">Get Current Performance Stats</button>
+            </div>
+        </div>
+    </body>
+</html>
